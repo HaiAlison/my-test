@@ -5,10 +5,13 @@ import { NotificationModule } from './notification/notification.module';
 import { getConnectionOptions } from 'typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
+import { MqttModule } from './mqtt/mqtt.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
     NotificationModule,
+    MongooseModule.forRoot('mongodb://localhost/mqtt'),
     TypeOrmModule.forRootAsync({
       useFactory: async () => {
         return Object.assign(await getConnectionOptions(), {
@@ -17,6 +20,7 @@ import { UserModule } from './user/user.module';
       },
     }),
     UserModule,
+    MqttModule,
   ],
   controllers: [AppController],
   providers: [AppService],
