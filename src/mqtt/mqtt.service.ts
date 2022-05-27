@@ -15,8 +15,10 @@ export class MqttService {
   ) {}
   client = mqtt.connect('mqtt://206.189.46.172');
 
-  async getTemperature() {
-    this.client.subscribe('opc-test');
+  async saveTemperature() {
+    this.client.subscribe(
+      'DigiFarm/GFV.Station 1.101/0_Ambient_Average_Temperature',
+    );
     this.client.on('connect', (cb) => {
       console.log('connect', cb);
     });
@@ -36,5 +38,16 @@ export class MqttService {
       }
     });
     return 'check console log';
+  }
+
+  async unsubscribeTopic(topic) {
+    console.log('unsubscribe ' + topic);
+    this.client.unsubscribe(topic);
+    return { msg: 'unsubscribed this topic: ' + topic };
+  }
+
+  async getChangeStream() {
+    const changeStream = this.actuatorDeviceModel.watch();
+    changeStream.on('change', (cb) => console.log('data', cb.fullDocument)); //return newest data
   }
 }

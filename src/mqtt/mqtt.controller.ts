@@ -1,14 +1,18 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { MqttService } from './mqtt.service';
 @Controller('mqtt')
 export class MqttController {
   constructor(private mqttService: MqttService) {}
-  @Get()
+  @Post()
   getTemperature() {
-    return this.mqttService.getTemperature();
+    return this.mqttService.saveTemperature();
   }
-  @Get('end')
+  @Post('unsubscribe')
+  unsubscribeTopic(@Body('topic') topic: string) {
+    return this.mqttService.unsubscribeTopic(topic);
+  }
+  @Get('change-stream')
   endGetTemperature() {
-    return this.mqttService.endGetTemperature();
+    return this.mqttService.getChangeStream();
   }
 }
