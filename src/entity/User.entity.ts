@@ -16,4 +16,12 @@ export class User extends BaseEntity {
 
   @Column('simple-array')
   firebaseTokens: string[];
+
+  @Column({ type: 'jsonb', nullable: true })
+  profile: profile[];
+}
+
+export interface profile {
+  token: string;
+  isActive: boolean;
 }
