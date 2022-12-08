@@ -1,0 +1,12 @@
+diff --git a/src/main.ts b/src/main.ts
+index bea4f3e..9ea6bc8 100644
+--- a/src/main.ts
++++ b/src/main.ts
+@@ -16,6 +16,7 @@ async function bootstrap() {
+   client.on('connect', (cb) => {
+     console.log('connect', cb);
+   });
++  console.log('hello there');
+   app.useGlobalPipes(new ValidationPipe({ transform: true }));
+   await app.listen(3000, () => {
+     //this is always get message when start service
